@@ -64,6 +64,14 @@ Os neurônios artificiais podem ser usados para simular **circuitos lógicos** c
 | 1 | 0 |   1      |
 | 1 | 1 |   1      |
 
+**NOT:**
+| A | B | !B | A && !B |
+|---|---|----|---------|
+| 0 | 0 |  1 |    0    |
+| 0 | 1 |  0 |    0    |
+| 1 | 0 |  1 |    1    |
+| 1 | 1 |  0 |    0    |
+
 Essas redes neurais podem ser combinadas para computar expressões lógicas mais complexas, que são a base de decisões computacionais.
 
 ### Forward Propagation
