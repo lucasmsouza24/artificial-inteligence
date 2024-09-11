@@ -102,7 +102,7 @@ y_pred = perceptron.predict(X_test)
 print(y_pred) # output: [0 0 0 1]
 ~~~
 
-!Neste exemplo, o Perceptron aprende a simular a operação lógica **AND**.
+    Neste exemplo, o Perceptron aprende a simular a operação lógica **AND**.
 
 ### Limitações do Perceptron
 Embora o Perceptron tenha sido um avanço importante, **Marvin Minsky** e **Seymour Papert**, em 1969, destacaram suas limitações em uma monografia. O Perceptron simples não consegue resolver problemas que envolvem **classificação não linear**, como o famoso caso do **OR exclusivo (XOR)**, onde não é possível traçar uma linha reta para separar as classes.
