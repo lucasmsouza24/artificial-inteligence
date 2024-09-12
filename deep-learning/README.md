@@ -102,7 +102,7 @@ y_pred = perceptron.predict(X_test)
 print(y_pred) # output: [0 0 0 1]
 ~~~
 
-    Neste exemplo, o Perceptron aprende a simular a operação lógica **AND**.
+>Neste exemplo, o Perceptron aprende a simular a operação lógica **AND**.
 
 ### Limitações do Perceptron
 Embora o Perceptron tenha sido um avanço importante, **Marvin Minsky** e **Seymour Papert**, em 1969, destacaram suas limitações em uma monografia. O Perceptron simples não consegue resolver problemas que envolvem **classificação não linear**, como o famoso caso do **OR exclusivo (XOR)**, onde não é possível traçar uma linha reta para separar as classes.
@@ -115,3 +115,67 @@ Embora o Perceptron tenha sido um avanço importante, **Marvin Minsky** e **Seym
 Essas limitações podem ser superadas com o uso de arquiteturas mais complexas, como o **Multilayer Perceptron (MLP)**, que utiliza múltiplas camadas de neurônios para lidar com padrões mais complexos e realizar classificações não lineares.
 
 ## Multi Layer Perceptron (MLP)
+
+O **Multilayer Perceptron (MLP)** é uma extensão do Perceptron simples e uma das arquiteturas mais fundamentais em redes neurais. Ao contrário do Perceptron de camada única, o MLP possui múltiplas camadas de neurônios, permitindo que ele resolva problemas que envolvem classificação não linear, como o famoso problema do XOR.
+
+### Estrutura do MLP
+Um MLP típico é composto por:
+
+- **Uma camada de entrada:** onde os dados brutos são alimentados.
+- **Camadas ocultas:** uma ou mais camadas intermediárias onde os neurônios processam os dados com base em pesos e funções de ativação.
+- **Camada de saída:** fornece a predição final do modelo, geralmente após aplicar uma função de ativação.
+
+>Além disso, cada camada contém neurônios de viés, que ajudam a ajustar o modelo para melhorar a performance.
+
+### Funcionamento
+O MLP utiliza dois processos principais para seu aprendizado:
+
+- **Forward Pass (Propagação Direta):** Os dados são propagados através da rede, da camada de entrada até a camada de saída, onde a predição é gerada.
+- **Backward Pass (Retropropagação):** Após calcular o erro da predição (diferença entre a saída prevista e o valor real), o erro é propagado para trás, ajustando os pesos das conexões para melhorar as previsões futuras.
+
+### Funções de Ativação
+As funções de ativação desempenham um papel crucial na introdução de não-linearidade, permitindo que a rede aprenda padrões complexos. As mais comuns em MLPs são:
+
+- **Sigmoid (ou logística):** 
+``σ(z) = 1 / (1 + exp(-z))``
+
+- **Tanh (Tangente Hiperbólica):** 
+``tanh(z) = 2σ(2z) - 1``
+
+- **ReLU (Rectified Linear Unit):** 
+``ReLU(z) = max(0, z)``
+
+Outras variações, como Leaky ReLU, ELU (Exponential Linear Unit) e SELU (Scaled ELU), também são usadas para melhorar a performance, especialmente em redes mais profundas.
+
+### Aplicações do MLP
+O MLP pode ser utilizado tanto para classificação binária quanto para classificação multiclasse:
+
+- **Classificação Binária:** Usa um neurônio de saída com função de ativação logística (**sigmoid**), onde a saída pode ser interpretada como a probabilidade estimada da classe positiva.
+- **Classificação Multiclasse:** Para esse caso, utiliza-se um neurônio de saída por classe e a função de ativação **softmax** para normalizar as saídas e fornecer probabilidades para cada classe.
+
+>Softmax: Converte as saídas de uma rede neural em probabilidades, garantindo que a soma seja 1. Usada em classificação multiclasse.
+
+### Superando as Limitações do Perceptron
+Ao adicionar camadas ocultas e funções de ativação não lineares, o MLP é capaz de superar as limitações do Perceptron simples, conseguindo resolver problemas como:
+- XOR.
+- Reconhecimento de Padrões.
+- Regressão.
+- Classificação Multiclasse.
+
+### Exemplo prático (XOR)
+
+~~~python
+from sklearn.neural_network import MLPClassifier
+
+X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+y = [0, 1, 1, 0]  # Saídas esperadas para XOR
+
+mlp = MLPClassifier(hidden_layer_sizes=(2,), activation='relu', solver='adam', max_iter=1000, random_state=42)
+
+mlp.fit(X, y)
+
+y_pred = mlp.predict(X)
+
+print(f"Predições para XOR: {y_pred}")
+~~~
+
