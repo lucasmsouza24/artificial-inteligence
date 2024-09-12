@@ -134,18 +134,47 @@ O MLP utiliza dois processos principais para seu aprendizado:
 - **Backward Pass (Retropropagação):** Após calcular o erro da predição (diferença entre a saída prevista e o valor real), o erro é propagado para trás, ajustando os pesos das conexões para melhorar as previsões futuras.
 
 ### Funções de Ativação
-As funções de ativação desempenham um papel crucial na introdução de não-linearidade, permitindo que a rede aprenda padrões complexos. As mais comuns em MLPs são:
 
-- **Sigmoid (ou logística):** 
-``σ(z) = 1 / (1 + exp(-z))``
+#### O que é uma Função de Ativação?
+As funções de ativação são elementos fundamentais em redes neurais. Elas são usadas para definir se um neurônio deve ser "ativado" ou não, e introduzem não-linearidade no modelo. Isso permite que a rede aprenda e represente relações complexas e não lineares nos dados, essenciais para resolver problemas mais desafiadores, como o reconhecimento de padrões e a classificação de imagens.
 
-- **Tanh (Tangente Hiperbólica):** 
-``tanh(z) = 2σ(2z) - 1``
+#### Por que precisamos de funções de ativação?
+Sem funções de ativação, as redes neurais funcionariam como um simples modelo linear, incapaz de capturar padrões complexos. As funções de ativação possibilitam que a rede aprenda e resolva problemas de classificação não linear, como o **XOR**.
 
-- **ReLU (Rectified Linear Unit):** 
-``ReLU(z) = max(0, z)``
+#### Principais Funções de Ativação
+Agora, vamos explorar as principais funções de ativação citadas: **Sigmoid**, **Tanh**, **ReLU** e **Softmax**, destacando suas características e quando elas são mais indicadas.
 
-Outras variações, como Leaky ReLU, ELU (Exponential Linear Unit) e SELU (Scaled ELU), também são usadas para melhorar a performance, especialmente em redes mais profundas.
+**1. Sigmoid (Logística)**
+Fórmula: ``σ(z) = 1 / (1 + exp(-z))``
+
+>**Como funciona:** Mapeia qualquer valor de entrada para um intervalo entre **0 e 1**, tornando-a útil para tarefas de classificação binária. Se a saída for maior que 0.5, pode-se considerar como pertencente à classe positiva.
+
+**Pontos importantes:**
+
+- **Suavidade:** Produz uma transição suave entre as classes.
+- **Uso:** Comumente utilizada para saídas binárias em problemas de classificação.
+- **Problema:** Pode sofrer com o problema do desvanecimento do gradiente em redes profundas, o que dificulta o treinamento.
+
+**2. Tanh (Tangente Hiperbólica)**
+Fórmula: ``tanh(z) = 2σ(2z) - 1``
+
+>**Como funciona:** Assim como a sigmoid, mapeia valores, mas em um intervalo de **-1 a 1**, o que a torna mais centralizada em torno de zero. Isso facilita a convergência durante o treinamento.
+
+**Pontos importantes:**
+
+- **Centro em zero:** Ao contrário da sigmoid, o valor de saída de neurônios **pode ser negativo**, o que ajuda a modelar dados que tenham valores distribuídos de forma positiva e negativa.
+- **Uso:** Boa escolha para camadas ocultas de redes neurais.
+- **Problema:** Também pode sofrer com o desvanecimento do gradiente em redes profundas.
+
+**3. ReLU (Rectified Linear Unit)**
+Fórmula: ``ReLU(z) = max(0, z)``
+
+>**Como funciona:** Simplesmente transforma entradas negativas em zero, mantendo as entradas positivas inalteradas. ReLU é muito eficiente em termos de cálculo e é amplamente usada em redes neurais profundas.
+
+**Pontos importantes:**
+
+- **Eficiência:** ReLU é computacionalmente leve e ajuda a evitar o problema do desvanecimento do gradiente, sendo preferida em redes profundas.
+- **Problema:** Pode sofrer do problema de neurônios mortos, quando muitos valores de entrada são negativos, resultando em um gradiente zero e um neurônio que não "dispara".
 
 ### Aplicações do MLP
 O MLP pode ser utilizado tanto para classificação binária quanto para classificação multiclasse:
@@ -178,4 +207,3 @@ y_pred = mlp.predict(X)
 
 print(f"Predições para XOR: {y_pred}")
 ~~~
-
