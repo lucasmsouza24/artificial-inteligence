@@ -4,5 +4,5 @@ Esse repositório tem como objetivo registrar tanto os conceitos aprendidos quan
 
 - Machine Learning
 - Pattern Recognition
-- Big Data Architecture
+- [Big Data Architecture](./big-data-archtecture/README.md)
 - [Artificial Intelligence (Deep Learning)](./deep-learning/README.md)
