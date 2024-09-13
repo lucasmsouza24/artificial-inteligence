@@ -3,7 +3,7 @@
 - [Introdução](#introdução)
 - [Perceptron](#perceptron)
 - [Multi Layer Perceptron (MLP)](#multi-layer-perceptron-mlp)
-- Backpropagation e Regularização
+- [Backpropagation e Regularização](#backpropagation-e-regularização)
 - Keras e TF (Tensorflow)
 
 ## Introdução
@@ -207,3 +207,44 @@ y_pred = mlp.predict(X)
 
 print(f"Predições para XOR: {y_pred}")
 ~~~
+
+## Backpropagation e Regularização
+
+### Backpropagation
+
+Backpropagation (ou retropropagação) é o algoritmo usado para ajustar os pesos em uma rede neural durante o processo de treinamento, a fim de minimizar o erro entre o **valor real** e o **valor previsto**.
+
+#### Funcionamento
+O processo ocorre em duas fases:
+
+- **Forward Pass (Propagação Direta):** Os dados são passados pelas camadas da rede até a camada de saída, onde uma predição é feita.
+
+- **Backward Pass (Retropropagação):** O erro entre a predição e o valor real **y** é calculado usando uma função de custo (como a **Cross Entropy** para classificação). O erro é então propagado de volta pela rede, ajustando os pesos com base nos **gradientes**. Isso é feito usando o método de descida do gradiente, que busca minimizar o erro ajustando os pesos na direção oposta ao gradiente do erro.
+
+#### Exemplo de função de custo:
+
+- Para problemas de classificação, usa-se frequentemente a **Cross Entropy Loss**:
+~~~scss
+L(y, ŷ) = - ∑ y log(ŷ)
+~~~
+- Para regressão, a função de custo comum é o **Erro Quadrático Médio (Mean Squared Error):**
+~~~scss
+L(y, ŷ) = (1/n) ∑ (y - ŷ)^2
+~~~
+
+>Problemas como o **desaparecimento** e **explosão de gradientes** podem ocorrer durante o treinamento, especialmente em redes profundas. Para mitigar esses problemas, são usadas técnicas como a **ReLU** e variações como **Leaky ReLU**.
+
+### Regularização
+
+**Regularização** é uma técnica utilizada para melhorar a capacidade de generalização de uma rede neural, evitando o **overfitting**. Overfitting ocorre quando a rede aprende detalhes específicos dos dados de treino, incluindo o ruído, em vez de aprender padrões generalizáveis.
+
+#### Técnicas de Regularização:
+
+- **Regularização L2 (Ridge):** Penaliza os pesos grandes, adicionando um termo à função de custo que aumenta à medida que os pesos se tornam grandes. Isso força a rede a manter os pesos pequenos, prevenindo overfitting.
+- **Regularização L1 (Lasso):** Funciona de maneira semelhante ao L2, mas penaliza o valor absoluto dos pesos. Isso pode levar à eliminação de alguns pesos, promovendo sparsidade.
+- **Dropout:** Durante o treinamento, desativa aleatoriamente uma porcentagem de neurônios, forçando a rede a não depender excessivamente de neurônios específicos. Isso ajuda a combater o overfitting e a criar uma rede mais robusta.
+
+#### Quando usar
+- **L2** é amplamente utilizado para manter os pesos sob controle e é a escolha padrão em muitos casos.
+- **L1** é útil quando se deseja uma solução mais simples, com alguns pesos efetivamente eliminados.
+- **Dropout** é popular em redes profundas e pode ser aplicado a várias camadas, forçando a rede a aprender representações mais generalizáveis.
