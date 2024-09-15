@@ -4,7 +4,7 @@
 - [Perceptron](#perceptron)
 - [Multi Layer Perceptron (MLP)](#multi-layer-perceptron-mlp)
 - [Backpropagation e Regularização](#backpropagation-e-regularização)
-- Keras e TF (Tensorflow)
+- [Keras e TF (Tensorflow)](#keras-e-tf-tensorflow)
 
 ## Introdução
 
@@ -248,3 +248,59 @@ L(y, ŷ) = (1/n) ∑ (y - ŷ)^2
 - **L2** é amplamente utilizado para manter os pesos sob controle e é a escolha padrão em muitos casos.
 - **L1** é útil quando se deseja uma solução mais simples, com alguns pesos efetivamente eliminados.
 - **Dropout** é popular em redes profundas e pode ser aplicado a várias camadas, forçando a rede a aprender representações mais generalizáveis.
+
+## Keras e TF (Tensorflow)
+
+### TensorFlow e Keras
+O **TensorFlow** é uma plataforma de aprendizado profundo de código aberto, desenvolvida pelo **Google**, que permite construir, treinar e implementar modelos de machine learning e deep learning em escala. O **Keras**, por sua vez, é uma API de alto nível construída sobre o TensorFlow, que facilita a criação e o treinamento de redes neurais de maneira simples e rápida.
+
+### O que é o TensorFlow?
+O **TensorFlow** é uma biblioteca poderosa que suporta a construção de gráficos computacionais dinâmicos, manipulando dados na forma de tensores. Esses tensores são generalizações de **vetores e matrizes**, representando dados em múltiplas dimensões, que são fundamentais para operações de álgebra linear em aprendizado profundo. Além disso, o TensorFlow facilita o uso de aceleradores de hardware, como **GPUs** e **TPUs**, para otimizar o desempenho em tarefas intensivas de computação.
+
+### O que é Keras?
+O **Keras** é uma API de alto nível para redes neurais, projetada para ser fácil de usar e ao mesmo tempo poderosa. Ela foi incorporada ao **TensorFlow** como sua API padrão, chamada de **tf.keras**, e fornece diversas funcionalidades para construir, compilar e treinar redes neurais complexas com apenas algumas linhas de código.
+
+### Ciclo de Vida de um Modelo em Keras
+O ciclo de vida de um modelo em Keras segue as seguintes etapas principais:
+
+1. **Preprocessing():** Pré-processamento dos dados.
+2. **Model():** Definição da arquitetura do modelo.
+3. **Compile():** Compilação do modelo, especificando a função de custo, otimizador e métricas.
+4. **Fit():** Treinamento do modelo com os dados de treino.
+5. **Evaluate():** Avaliação do modelo com dados de teste ou validação.
+6. **Predict():** Geração de previsões usando o modelo treinado​
+
+### Principais APIs do Keras
+O Keras fornece várias APIs e módulos essenciais para a construção e o treinamento de redes neurais:
+
+- ``tf.keras.Sequential:`` Para criar modelos sequenciais, onde as camadas são empilhadas linearmente.
+- ``tf.keras.Model:`` Permite criar modelos mais complexos usando a API Funcional, suportando múltiplas entradas e saídas.
+- ``tf.keras.layers:`` Fornece uma ampla variedade de camadas como Dense, Conv2D, e LSTM, que são blocos fundamentais para construir redes neurais.
+- ``tf.keras.optimizers:`` Inclui otimizadores como SGD, Adam, e RMSprop para ajustar os pesos durante o treinamento.
+- ``tf.keras.losses:`` Contém funções de perda como Mean Squared Error e Categorical Crossentropy.
+- ``tf.keras.metrics:`` Fornece métricas para avaliar a performance do modelo, como accuracy, precision, e recall.
+- ``tf.keras.callbacks:`` Permite executar ações durante o treinamento, como salvar checkpoints e interromper o treinamento antecipadamente com EarlyStopping
+
+### Exemplo de Implementação com Keras
+Abaixo, um exemplo de como criar um MLP usando a API Sequential do Keras:
+
+~~~python
+import tensorflow as tf
+from tensorflow import keras
+
+# Definindo o modelo
+model = keras.models.Sequential([
+    keras.layers.Flatten(input_shape=[28, 28]),
+    keras.layers.Dense(300, activation="relu"),
+    keras.layers.Dense(100, activation="relu"),
+    keras.layers.Dense(10, activation="softmax")
+])
+
+# Compilando o modelo
+model.compile(loss="sparse_categorical_crossentropy",
+              optimizer="adam",
+              metrics=["accuracy"])
+
+# Treinando o modelo
+history = model.fit(X_train, y_train, epochs=10, validation_data=(X_val, y_val))
+~~~
