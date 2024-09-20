@@ -5,6 +5,7 @@
 - [Multi Layer Perceptron (MLP)](#multi-layer-perceptron-mlp)
 - [Backpropagation e Regularização](#backpropagation-e-regularização)
 - [Keras e TF (Tensorflow)](#keras-e-tf-tensorflow)
+- [Redes Neurais Convolucionais (CNN)](#redes-neurais-convolucionais-cnn)
 
 ## Introdução
 
@@ -304,3 +305,68 @@ model.compile(loss="sparse_categorical_crossentropy",
 # Treinando o modelo
 history = model.fit(X_train, y_train, epochs=10, validation_data=(X_val, y_val))
 ~~~
+
+## Redes Neurais Convolucionais (CNN)
+
+As CNN, também conhecidas como **Redes Neurais Convolutivas (RNC)**, são um tipo específico de rede neural projetada para processar dados estruturados em grade, como imagens. As CNNs têm sido amplamente utilizadas em tarefas de **visão computacional**, como classificação de imagens, detecção de objetos e reconhecimento facial.
+
+### Motivação
+
+Modelos tradicionais de redes neurais (ANN) enfrentam desafios ao lidar com dados de alta dimensão, como imagens. Por exemplo, uma imagem de **100x100** pixels teria cerca de **30.000** conexões em uma única camada totalmente conectada, resultando em **milhões** de pesos para serem ajustados. Isso torna o treinamento demorado e suscetível a overfitting.
+
+A CNN resolve esse problema **reduzindo a dimensionalidade** das imagens e aprendendo automaticamente os padrões locais por meio de camadas convolucionais.
+
+### Estrutura de uma CNN
+
+A arquitetura de uma CNN é composta por várias camadas que processam a imagem de maneira hierárquica, extraindo gradualmente características mais complexas.
+
+**1. Camadas Convolucionais**
+As camadas convolucionais aplicam **filtros** (ou kernels) sobre a imagem de entrada para extrair características importantes, como bordas e texturas. Um filtro é uma matriz pequena que percorre a imagem (operando uma **convolução**), e o resultado é chamado de **feature map**. Cada neurônio em uma camada convolucional está conectado a uma pequena área da camada anterior, chamada de campo receptivo, o que ajuda a reduzir o número de conexões.
+
+**2. Stride e Padding**
+- **Stride:** Define o número de pixels que o filtro "pula" ao percorrer a imagem. Um stride maior reduz o tamanho da imagem resultante.
+- **Padding:** Adiciona zeros em torno da borda da imagem de entrada, para garantir que a saída da convolução tenha o mesmo tamanho da entrada. O padding é essencial para preservar informações nas bordas das imagens.
+
+**3. Pooling Layers**
+As **camadas de pooling (agrupamento)** são usadas para reduzir a dimensionalidade das **feature maps**, diminuindo a quantidade de parâmetros e o uso de memória, além de reduzir o risco de overfitting. O **MaxPooling** é o tipo mais comum de pooling, onde apenas o valor máximo de cada região da imagem é mantido.
+
+**4. Flatten**
+Após várias camadas **convolucionais** e de **pooling**, os mapas de características são achatados em um vetor 1D. Isso permite que os dados sejam passados para camadas totalmente conectadas (camadas densas), onde a classificação ou predição final é feita.
+
+**5. Camada de Classificação (Dense)**
+As camadas totalmente conectadas são usadas para classificar a imagem com base nas características extraídas nas camadas anteriores. A última camada geralmente utiliza a função de ativação **Softmax** para fornecer probabilidades para cada classe de saída.
+
+### Exemplo de Implementação de uma CNN com Keras
+Abaixo está um exemplo simples de como construir uma CNN usando Keras:
+
+~~~python
+from tensorflow.keras import layers, models
+
+# Definindo a arquitetura da CNN
+model = models.Sequential([
+    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(10, activation='softmax')
+])
+
+# Compilando o modelo
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+# Resumo do modelo
+model.summary()
+~~~
+
+### Vantagens das CNNs
+
+- **Redução de Parâmetros:** Com o uso de camadas convolucionais e pooling, as CNNs conseguem reduzir significativamente o número de parâmetros em comparação às redes totalmente conectadas.
+Aprendizado de Padrões Locais: As CNNs capturam automaticamente padrões locais, como bordas, texturas e formas, essenciais para tarefas de visão computacional.
+- **Invariância a Transformações:** Com operações como pooling e convolução, as CNNs conseguem aprender padrões que são robustos a pequenas variações de translação e rotação nas imagens.
+
+### Conclusão
+
+As CNNs são extremamente poderosas para tarefas de visão computacional e se destacam em problemas onde há uma grande quantidade de dados de imagem a serem processados. Elas têm sido aplicadas em uma variedade de áreas, desde reconhecimento de imagens até sistemas de visão em veículos autônomos.
